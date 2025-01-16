@@ -16,6 +16,9 @@ const signToken = (id) => {
 
 // adding user to databse
 exports.signup = async (req, res) => {
+      res.setHeader("Access-Control-Allow-Origin", "https://skill-connect-erm5.vercel.app");
+      res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
       try {
             const user = await User.create(req.body);
             res.status(200).json(user)
