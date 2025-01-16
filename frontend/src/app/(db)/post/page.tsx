@@ -8,7 +8,10 @@ interface JobData {
   name: string;
   Job: string;
   location: string;
-  user: any;
+  phone: string;
+  rate: string;
+  mode: string;
+  user: string;
 }
 
 const AddJob = () => {
@@ -24,29 +27,30 @@ const AddJob = () => {
 
   // Submit job to API
   const submitJob = async (e: FormEvent) => {
-    e.preventDefault(); // Prevent the form from refreshing the page
-    setLoading(true); // Set loading to true when the submission starts
-    const jobData = {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    // Safely retrieve the authToken and userId from localStorage
+    const authToken = localStorage.getItem("auth_token");
+    const userId = localStorage.getItem("user._id");
+
+    // Check if authToken or userId is missing
+    if (!authToken || !userId) {
+      setMessage("No authentication token or user ID found. Please log in.");
+      setLoading(false);
+      return; // Exit early if these values are not present
+    }
+
+    const jobData: JobData = {
       name,
       Job,
       location,
       phone,
       rate,
       mode,
+      user: userId, // Safely use userId here
     };
-
-    // Get the authToken and userId from localStorage
-    const authToken = localStorage.getItem("auth_token");
-    const userId = localStorage.getItem("user._id"); // Retrieve the userId from localStorage
-
-    if (!authToken || !userId) {
-      setMessage("No authentication token or user ID found. Please log in.");
-      setLoading(false);
-      return;
-    }
-
-    // Add the userId to the jobData
-    jobData.user = userId;
 
     try {
       const response = await fetch(
@@ -55,7 +59,7 @@ const AddJob = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`, // Include the authToken in the headers
+            Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify(jobData),
         }
@@ -78,7 +82,7 @@ const AddJob = () => {
     } catch (error) {
       setMessage("Server error, try again later.");
     } finally {
-      setLoading(false); // Reset loading state after submission
+      setLoading(false);
     }
   };
 
