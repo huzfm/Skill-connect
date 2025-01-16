@@ -1,33 +1,37 @@
-'use client';
-import { useState } from 'react';
-import { ArrowRight, CheckCircle, MessageSquare, Search, PenToolIcon as Tool, Users } from 'lucide-react';
-import Link from 'next/link';
+"use client";
+import { useState } from "react";
+import {
+  ArrowRight,
+  CheckCircle,
+  MessageSquare,
+  Search,
+  PenToolIcon as Tool,
+  Users,
+} from "lucide-react";
+import Link from "next/link";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   return (
-    <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+    <nav className="bg-white dark:bg-gray-900  w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Tool className="h-6 w-6 mr-2" />
-          <span className="text-md whitespace-nowrap dark:text-white">
+          <span className="text-md whitespace-nowrap dark:text-white font-bold">
             SkillConnect
           </span>
         </Link>
 
         {/* Hamburger Button */}
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          
-          
-
-<Link
-  href="/login"
-  className="text-white bg-blue-700 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
->
-  Get started
-</Link>
+          <Link
+            href="/login"
+            className="text-white bg-blue-700 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Get started
+          </Link>
 
           <button
             type="button"
@@ -58,7 +62,7 @@ export default function Navbar() {
         {/* Navigation Menu */}
         <div
           className={`${
-            menuOpen ? 'block' : 'hidden'
+            menuOpen ? "block" : "hidden"
           } items-center justify-between w-full md:flex md:w-auto md:order-1`}
           id="navbar-sticky"
         >
@@ -80,7 +84,7 @@ export default function Navbar() {
                 About
               </Link>
             </li>
-            
+
             <li>
               <Link
                 href="/#cta"

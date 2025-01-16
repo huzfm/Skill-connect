@@ -55,10 +55,30 @@ const jobSchema = new mongoose.Schema({
       Job: {
             type: String,
             required: [true, 'Please provide a Job'],
+            enum: ["Plumber", "Electrician", "Mason", "Labour", "Carpenter"]
       },
       location: {
             type: String,
             required: [true, 'User must have a location'],
+      },
+      phone: {
+            type: String,
+            required: [true, 'User must have a Number'],
+            minlength: [10, 'Phone number must be 10 digits long'],
+            maxlength: [10, 'Phone number must be 10 digits long'],
+            match: [/^\d{10}$/, 'Phone number must contain exactly 10 digits']
+
+      },
+      rate: {
+            type: String,
+            required: [true, 'User must have a Rate'],
+            minlength: [3, 'Rate should not be less than 3 digits'],
+            maxlength: [4, 'Rate should not be more than 4 digits'],
+      },
+      mode: {
+            type: String,
+            required: [true, 'User must have a Rate'],
+            enum: ["Cash", "Online/UPI"]
       },
       user: {
             type: mongoose.Schema.Types.ObjectId,

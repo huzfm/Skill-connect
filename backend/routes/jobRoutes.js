@@ -4,7 +4,7 @@ const authController = require('./../controller/authController')
 const router = express.Router()
 
 
-router.post('/create', jobController.createjob)
+router.post('/create', authController.protect, jobController.createjob)
 router
       .route('/')
       .get(authController.protect, jobController.getAllJobs)

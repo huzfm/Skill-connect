@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import { AnimatedBackground } from "@/components/ui/animated-bg";
 // import { ResponsiveNav } from "@/components/ui/responsive-nav";
-import { ArrowRight, CheckCircle, MessageSquare, Search, PenToolIcon as Tool, Users } from 'lucide-react'
+import {
+  ArrowRight,
+  CheckCircle,
+  MessageSquare,
+  Search,
+  PenToolIcon as Tool,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
-
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,23 +34,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-
-
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-     
-        <header className="px-4 lg:px-6 h-14 flex items-center">
-          <Link className="flex items-center justify-center" href="/">
-           <Tool className="h-6 w-6 mr-2" />
-            <span className="font-bold">SkillConnect</span>
-          </Link>
-          {/* <ResponsiveNav /> */}
-        </header>
         {children}
       </body>
     </html>
-
   );
 }
