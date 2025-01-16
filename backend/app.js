@@ -18,7 +18,7 @@ dotenv.config();
 app.use(express.json()); // middleware which handles json data
 app.use(morgan('dev')) // middlwware which logs HTTP request 
 
-const allowedOrigins = ["https://skill-connect-erm5.vercel.app", "https://staging.example.com"];
+const allowedOrigins = ["https://skillconnectnext.vercel.app"];
 
 const corsOptions = {
       origin: function (origin, callback) {
