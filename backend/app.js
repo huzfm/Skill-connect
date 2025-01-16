@@ -20,6 +20,7 @@ app.use(morgan('dev')) // middlwware which logs HTTP request
 app.use(
       cors({
             origin: 'https://skill-connect-erm5.vercel.app/',// Specify your frontend's URL here
+
             credentials: true, // Allow sending cookies 
       })
 )
