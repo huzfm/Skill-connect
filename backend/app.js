@@ -19,7 +19,7 @@ app.use(express.json()); // middleware which handles json data
 app.use(morgan('dev')) // middlwware which logs HTTP request 
 app.use(
       cors({
-            origin: 'http://localhost:3000',// Specify your frontend's URL here
+            origin: 'https://skill-connect-erm5.vercel.app/',// Specify your frontend's URL here
             credentials: true, // Allow sending cookies 
       })
 )
