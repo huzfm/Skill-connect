@@ -22,6 +22,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AnimatedBackground } from "@/components/ui/animated-bg";
 
 interface Job {
   _id: string;
@@ -54,6 +55,7 @@ export default function JobsPage() {
         throw new Error("No auth token found");
       }
 
+      // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`, {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`, {
         method: "GET",
         headers: {
@@ -85,17 +87,16 @@ export default function JobsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
-      {/* Header */}
+    <div className="min-h-screen bg-slate-900 text-white ">
       <header className="border-b border-gray-800 sticky top-0 z-10 text-white backdrop-blur-md">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <Tool className="h-6 w-6" />
             <span className="font-bold text-lg tracking-wide">
               SkillConnect
             </span>
           </Link>
-          <nav className="flex items-center space-x-2 sm:space-x-4">
+          <nav className="flex items-center space-x-4">
             <Button variant="ghost" asChild>
               <Link href="/user-details" className="bg-white text-black">
                 My Jobs
@@ -117,9 +118,9 @@ export default function JobsPage() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 md:px-6 lg:px-8 py-12">
-        <h1 className="text-2xl sm:text-3xl lg:text-5xl font-semibold text-center mb-12 text-white font-heading">
+      {/* Main */}
+      <main className="container mx-auto px-6 py-12">
+        <h1 className="sm:text-4xl lg:text-5xl font-semibold  text-center mb-12 text-white font-heading">
           Services Providers Near You
         </h1>
 
@@ -138,50 +139,52 @@ export default function JobsPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-[100px] lg:m-[100px] m-[50px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-[100px]">
             {jobs.map((job) => (
               <Card
                 key={job._id}
                 className="bg-gray-800/50 border border-gray-700 shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 rounded-xl overflow-hidden w-[300px]"
               >
-                {/* Job Banner */}
-                <div className="bg-slate-200 p-4 text-black text-center font-bold text-xl">
+                {/* Header Banner */}
+                <div className="bg-slate-200 p-4 text-black  text-center font-bold text-2xl font-title">
                   {job.Job}
                 </div>
 
-                <CardContent className="p-6 space-y-4">
+                <CardContent className="p-10 space-y-4">
+                  {/* Job Details */}
                   <div className="flex flex-col space-y-2">
                     <div className="flex items-center space-x-2">
                       <Users className="h-5 w-5 text-slate-500" />
-                      <p className="text-md text-white font-bold">
+                      <p className="text-md text-white font-bold font-details">
                         Posted by: {job.name}
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
                       <MapPin className="h-5 w-5 text-green-500" />
-                      <p className="text-md text-white font-bold">
+                      <p className="text-md text-white font-bold font-details">
                         Location: {job.location}
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
                       <IndianRupee className="h-5 w-5 text-blue-700" />
-                      <p className="text-md text-white font-bold">
+                      <p className="text-md text-white font-bold font-details">
                         Rate: {job.rate} / Day
                       </p>
                     </div>
                   </div>
 
+                  {/* Expandable Content */}
                   {expandedJobId === job._id && (
                     <div className="space-y-2">
                       <div className="flex items-center space-x-2">
                         <CreditCard className="h-5 w-5 text-purple-500" />
-                        <p className="text-md text-white font-bold">
+                        <p className="text-md text-white font-bold font-details">
                           Payment Mode: {job.mode}
                         </p>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Phone className="h-5 w-5 text-red-500" />
-                        <p className="text-md text-white font-bold">
+                        <p className="text-md text-white font-bold font-details">
                           Phone: {job.phone}
                         </p>
                       </div>
@@ -189,15 +192,17 @@ export default function JobsPage() {
                   )}
                 </CardContent>
 
+                {/* Card Footer */}
                 <CardFooter className="flex flex-col items-center p-4">
                   <Button
                     variant="outline"
                     onClick={() => toggleJobDetails(job._id)}
-                    className="w-full mb-2"
+                    className="w-full mb-2 hover:bg-slate-300  transition"
                   >
                     {expandedJobId === job._id ? "Show Less" : "See More"}
                   </Button>
                   <Button
+                    //variant="solid"
                     className="w-full bg-black hover:bg-neutral-950 text-white"
                     onClick={() => window.open(`tel:${job.phone}`)}
                   >
