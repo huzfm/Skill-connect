@@ -28,10 +28,10 @@ export default function Home() {
         <Navbar />
 
         <main className="flex-1">
-          <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 h-[90vh]">
-            <div className="container px-4 md:px-6 h-full flex items-center justify-center">
-              <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="space-y-2">
+          <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 h-screen">
+            <div className="container px-4 sm:px-6 md:px-10 lg:px-16 h-full flex items-center justify-center">
+              <div className="flex flex-col items-center space-y-6 text-center">
+                <div className="space-y-4">
                   <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl z-50">
                     Connect with Skilled Professionals
                   </h1>
@@ -58,13 +58,13 @@ export default function Home() {
             id="features"
             className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
           >
-            <div className="container px-4 md:px-6">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
+            <div className="container px-4 sm:px-6 md:px-10 lg:px-16">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12">
                 Key Features
               </h2>
-              <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-3">
+              <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {/* Card 1 */}
-                <div className="flex flex-col  h-[500px] items-center justify-center bg-white dark:bg-gray-700 shadow-lg space-y-4 p-6 rounded-2xl">
+                <div className="flex flex-col h-[400px] items-center justify-center bg-white dark:bg-gray-700 shadow-lg space-y-4 p-6 rounded-2xl">
                   <Users className="h-12 w-12 text-blue-500" />
                   <h3 className="text-xl font-bold">
                     Service Provider Profiles
@@ -75,7 +75,7 @@ export default function Home() {
                   </p>
                 </div>
                 {/* Card 2 */}
-                <div className="flex flex-col  h-[500px] items-center justify-center bg-white dark:bg-gray-700 shadow-lg space-y-4 p-6 rounded-2xl">
+                <div className="flex flex-col h-[400px] items-center justify-center bg-white dark:bg-gray-700 shadow-lg space-y-4 p-6 rounded-2xl">
                   <Search className="h-12 w-12 text-blue-500" />
                   <h3 className="text-xl font-bold">Easy Search</h3>
                   <p className="text-gray-500 dark:text-gray-300 text-center">
@@ -84,7 +84,7 @@ export default function Home() {
                   </p>
                 </div>
                 {/* Card 3 */}
-                <div className="flex flex-col  h-[500px] items-center justify-center bg-white dark:bg-gray-700 shadow-lg space-y-4 p-6 rounded-2xl">
+                <div className="flex flex-col h-[400px] items-center justify-center bg-white dark:bg-gray-700 shadow-lg space-y-4 p-6 rounded-2xl">
                   <MessageSquare className="h-12 w-12 text-blue-500" />
                   <h3 className="text-xl font-bold">Direct Communication</h3>
                   <p className="text-gray-500 dark:text-gray-300 text-center">
@@ -96,11 +96,11 @@ export default function Home() {
           </section>
 
           <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32">
-            <div className="container px-4 md:px-6">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
+            <div className="container px-4 sm:px-6 md:px-10 lg:px-16">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12">
                 How It Works
               </h2>
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg">
                   <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg">
                     1
@@ -136,13 +136,13 @@ export default function Home() {
             id="cta"
             className="w-full py-12 md:py-24 lg:py-32 bg-blue-500 text-white"
           >
-            <div className="container px-4 md:px-6">
-              <div className="flex flex-col items-center space-y-4 text-center">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+            <div className="container px-4 sm:px-6 md:px-10 lg:px-16">
+              <div className="flex flex-col items-center space-y-6 text-center">
+                <div className="space-y-4">
+                  <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">
                     Ready to Get Started?
                   </h2>
-                  <p className="mx-auto max-w-[600px] text-blue-100 md:text-xl">
+                  <p className="mx-auto max-w-[600px] text-blue-100 md:text-lg">
                     Join SkillConnect today and start connecting with skilled
                     professionals or finding new clients for your services.
                   </p>
@@ -155,45 +155,53 @@ export default function Home() {
               </div>
             </div>
 
-            <footer className=" text-center lg:text-left">
-              <div className="flex justify-center items-center">
-                <div className="bg-white p-4 rounded-lg shadow-lg mt-10">
-                  <div className="flex items-center justify-center space-x-5">
-                    <Link
-                      href="https://facebook.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-800 transition-colors"
-                    >
-                      <FontAwesomeIcon icon={faFacebook} className="h-6 w-6" />
-                      <span className="sr-only">Facebook</span>
-                    </Link>
-                    <Link
-                      href="https://instagram.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-pink-600 transition-colors"
-                    >
-                      <FontAwesomeIcon icon={faInstagram} className="h-6 w-6" />
-                      <span className="sr-only">Instagram</span>
-                    </Link>
-                    <Link
-                      href="https://twitter.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-800 transition-colors"
-                    >
-                      <FontAwesomeIcon icon={faTwitter} className="h-6 w-6" />
-                      <span className="sr-only">Twitter</span>
-                    </Link>
+            <footer className="mt-10">
+              <div className="text-center">
+                <div className="flex justify-center items-center">
+                  <div className="bg-white p-4 rounded-lg shadow-lg">
+                    <div className="flex items-center justify-center space-x-5">
+                      <Link
+                        href="https://facebook.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-800 transition-colors"
+                      >
+                        <FontAwesomeIcon
+                          icon={faFacebook}
+                          className="h-6 w-6"
+                        />
+                        <span className="sr-only">Facebook</span>
+                      </Link>
+                      <Link
+                        href="https://instagram.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-pink-600 transition-colors"
+                      >
+                        <FontAwesomeIcon
+                          icon={faInstagram}
+                          className="h-6 w-6"
+                        />
+                        <span className="sr-only">Instagram</span>
+                      </Link>
+                      <Link
+                        href="https://twitter.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-800 transition-colors"
+                      >
+                        <FontAwesomeIcon icon={faTwitter} className="h-6 w-6" />
+                        <span className="sr-only">Twitter</span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className="p-4 text-center text-surface text-black font-mono">
+                <a href="https://huzaifmushtaq.netlify.app">huzfm</a> ©{" "}
+                {new Date().getFullYear()}
+              </div>
             </footer>
-            <div className="p-4 text-center text-surface text-black font-mono">
-              <a href="https://huzaifmushtaq.netlify.app">huzfm</a> ©{" "}
-              {new Date().getFullYear()}
-            </div>
           </section>
         </main>
       </div>

@@ -18,29 +18,29 @@ dotenv.config();
 app.use(express.json()); // middleware which handles json data
 app.use(morgan('dev')) // middlwware which logs HTTP request 
 
-const allowedOrigins = ["https://skillconnectnext.vercel.app"];
+// const allowedOrigins = ["https://skillconnectnext.vercel.app", 'https://localhost:3000'];
 
-const corsOptions = {
-      origin: function (origin, callback) {
-            if (allowedOrigins.includes(origin) || !origin) {
-                  callback(null, true);
-            } else {
-                  callback(new Error("Not allowed by CORS"));
-            }
-      },
-      credentials: true, // Allow cookies/authorization headers
-};
+// const corsOptions = {
+//       origin: function (origin, callback) {
+//             if (allowedOrigins.includes(origin) || !origin) {
+//                   callback(null, true);
+//             } else {
+//                   callback(new Error("Not allowed by CORS"));
+//             }
+//       },
+//       credentials: true, // Allow cookies/authorization headers
+// };
 
-// Apply the CORS middleware globally
-app.use(cors(corsOptions));
+// // Apply the CORS middleware globally
+// app.use(cors(corsOptions));
 
-// app.use(
-//       cors({
-//             origin: 'https://skill-connect-erm5.vercel.app/',// Specify your frontend's URL here
+app.use(
+      cors({
+            origin: 'http://localhost:3000',// Specify your frontend's URL here
 
-//             credentials: true, // Allow sending cookies 
-//       })
-// )
+            credentials: true, // Allow sending cookies 
+      })
+)
 app.use(cookieParser())
 
 app.use('/api/users', userRoutes);
