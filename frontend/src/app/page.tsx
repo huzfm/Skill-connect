@@ -29,7 +29,7 @@ export default function Home() {
 
         <main className="flex-1">
           <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 h-[90vh]">
-            <div className="container px-4 md:px-6 h-full flex items-center justify-center">
+            <div className=" px-4 md:px-6 h-full flex items-center justify-center">
               <div className="flex flex-col items-center space-y-4 text-center">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl z-50">
@@ -41,13 +41,18 @@ export default function Home() {
                     for your job.
                   </p>
                 </div>
-                <div className="space-x-4 flex justify-center">
-                  <Button>
+                <div className="space-x-4 flex flex-col sm:flex-row justify-center items-center">
+                  <Button className="w-full sm:w-auto">
                     <Link href="/login">Get Started</Link>
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                   <a href="#how-it-works">
-                    <Button variant="outline">Learn More</Button>
+                    <Button
+                      variant="outline"
+                      className="w-full sm:w-auto mt-4 sm:mt-0"
+                    >
+                      Learn More
+                    </Button>
                   </a>
                 </div>
               </div>
@@ -58,7 +63,7 @@ export default function Home() {
             id="features"
             className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800"
           >
-            <div className="container px-4 md:px-6">
+            <div className=" px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
                 Key Features
               </h2>
@@ -96,7 +101,7 @@ export default function Home() {
           </section>
 
           <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32">
-            <div className="container px-4 md:px-6">
+            <div className=" px-4 md:px-6">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12">
                 How It Works
               </h2>
@@ -136,7 +141,7 @@ export default function Home() {
             id="cta"
             className="w-full py-12 md:py-24 lg:py-32 bg-blue-500 text-white"
           >
-            <div className="container px-4 md:px-6">
+            <div className=" px-4 md:px-6">
               <div className="flex flex-col items-center space-y-4 text-center">
                 <div className="space-y-2">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">

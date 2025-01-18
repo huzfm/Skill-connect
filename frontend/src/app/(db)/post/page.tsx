@@ -3,6 +3,7 @@
 import { useState, FormEvent } from "react";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 interface JobData {
   name: string;
@@ -89,6 +90,13 @@ const AddJob = () => {
   return (
     <>
       <div className=" min-h-screen p-6">
+        <button
+          onClick={() => router.back()}
+          className="flex items-center space-x-2 text-gray-800 hover:text-black transition-colors duration-300"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          <span className="text-sm font-medium">Back</span>
+        </button>
         <div className="max-w-sm  my-5 p-5 border rounded-md shadow-lg mx-5 lg:mx-auto sm:mx-5 ">
           <h1 className="text-2xl font-semibold mb-4 text-center">
             Create a New Job
@@ -161,6 +169,7 @@ const AddJob = () => {
               <input
                 id="number"
                 type="number"
+                maxLength={10}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required

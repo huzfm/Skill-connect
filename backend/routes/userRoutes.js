@@ -8,21 +8,19 @@ router.post('/signup', authController.signup)
 router.post('/login', authController.login)
 router.post('/logout', authController.logout)
 
-router
-      .route('/')
-      .get(userController.getAllUsers)
+// router
+//       .route('/')
+//       .get(userController.getAllUsers)
 
 
-router.get('/:id', userController.getUserWithJobs);
+router.get('/:id', authController.protect, userController.getUserWithJobs);
 
 
 
 router
       .route('/:id')
-      .get(userController.getUser)
-      .patch(userController.updateUser)
-      .delete(userController.deleteUser)
-      .patch(userController.updateJob)
-      .delete(userController.deleteJob)
+// .patch(userController.updateUser)
+// .delete(userController.deleteUser)
+
 
 module.exports = router

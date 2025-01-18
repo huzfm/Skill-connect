@@ -22,6 +22,7 @@ interface User {
   email: string;
   jobs: Job[];
 }
+
 interface Name {
   name: string;
 }
@@ -37,6 +38,7 @@ const UserProfile: React.FC = () => {
 
   useEffect(() => {
     const userId = localStorage.getItem("user._id");
+
     if (userId) {
       fetchUserData(userId);
     } else {
@@ -47,9 +49,25 @@ const UserProfile: React.FC = () => {
 
   const fetchUserData = async (userId: string) => {
     try {
+      const authToken = localStorage.getItem("auth_token");
+
+      if (!authToken) {
+        setError("You must be logged in to fetch user data");
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
       );
+
       if (response.ok) {
         const data: User = await response.json();
         setUser(data);
@@ -61,17 +79,26 @@ const UserProfile: React.FC = () => {
     } catch (error) {
       setError("Error fetching data");
       setLoading(false);
+      console.error(error);
     }
   };
 
   const updateJob = async (jobId: string, updates: Partial<Job>) => {
     try {
+      const authToken = localStorage.getItem("auth_token");
+
+      if (!authToken) {
+        alert("You must be logged in to update a job");
+        return;
+      }
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/jobs/${jobId}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify(updates),
         }
@@ -86,35 +113,33 @@ const UserProfile: React.FC = () => {
           );
           setUser({ ...user, jobs: updatedJobs });
         }
+
         setDialogOpen(false);
       } else {
         alert("Failed to update the job");
       }
     } catch (error) {
       alert("Error updating the job");
-    }
-  };
-
-  const NameJob = async (jobId: string, updates: Partial<Job>) => {
-    try {
-      const response = await fetch(`http://:8000/api/jobs/${jobId}`);
-
-      if (response.ok) {
-        const myName: Name = await response.json();
-      }
-    } catch (error) {
-      alert("error in fetchin nae");
+      console.error(error);
     }
   };
 
   const deleteJob = async (jobId: string) => {
     try {
+      const authToken = localStorage.getItem("auth_token");
+
+      if (!authToken) {
+        alert("You must be logged in to delete a job");
+        return;
+      }
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/jobs/${jobId}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
           },
         }
       );
@@ -130,12 +155,20 @@ const UserProfile: React.FC = () => {
       }
     } catch (error) {
       alert("Error deleting the job");
+      console.error(error);
     }
   };
 
   const openUpdateDialog = (job: Job) => {
     setJobToEdit(job);
-    setJobUpdates({ name: job.name, location: job.location, Job: job.Job });
+    setJobUpdates({
+      name: job.name,
+      location: job.location,
+      Job: job.Job,
+      rate: job.rate,
+      mode: job.mode,
+      phone: job.phone,
+    });
     setDialogOpen(true);
   };
 
@@ -144,8 +177,24 @@ const UserProfile: React.FC = () => {
   };
 
   const handleUpdateSubmit = () => {
-    if (jobToEdit && jobUpdates) {
+    const { name, location, Job, rate, phone, mode } = jobUpdates;
+
+    if (!name || !location || !Job || !rate || !phone || !mode) {
+      alert("All fields are required.");
+      return;
+    }
+
+    // Validate phone number
+    if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+      alert("Phone number must be exactly 10 numeric digits.");
+      return;
+    }
+
+    if (jobToEdit) {
+      // Call the update API
       updateJob(jobToEdit._id, jobUpdates);
+    } else {
+      alert("No job selected for update.");
     }
   };
 
@@ -325,7 +374,6 @@ const UserProfile: React.FC = () => {
                     <option value="" disabled>
                       Select a Job Description
                     </option>
-                    <option value="">Select a Service</option>
                     <option value="Mason">Mason</option>
                     <option value="Electrician">Electrician</option>
                     <option value="Plumber">Plumber</option>
@@ -333,20 +381,64 @@ const UserProfile: React.FC = () => {
                     <option value="Carpenter">Carpenter</option>
                   </select>
                 </div>
-              </div>
-              <div className="mt-6 flex justify-end space-x-4">
-                <button
-                  className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors duration-300"
-                  onClick={() => setDialogOpen(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="px-4 py-2 bg-black text-white rounded-md  transition-colors duration-300"
-                  onClick={handleUpdateSubmit}
-                >
-                  Save Changes
-                </button>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Rate Per Day
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={4}
+                    minLength={3}
+                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    value={jobUpdates.rate || ""}
+                    onChange={(e) => handleInputChange("rate", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={10}
+                    minLength={10}
+                    required
+                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    value={jobUpdates.phone}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Mode of Payment
+                  </label>
+                  <select
+                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    value={jobUpdates.mode || ""}
+                    onChange={(e) => handleInputChange("mode", e.target.value)}
+                  >
+                    <option value="" disabled>
+                      Select Mode of Payment
+                    </option>
+                    <option value="Cash">Cash</option>
+                    <option value="Bank Transfer">Online/UPI</option>
+                  </select>
+                </div>
+
+                <div className="mt-6 flex justify-end space-x-4">
+                  <button
+                    onClick={() => setDialogOpen(false)}
+                    className="px-4 py-2 bg-gray-300 text-black rounded-lg"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleUpdateSubmit}
+                    className="px-4 py-2 bg-black text-white rounded-lg"
+                  >
+                    Save
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>

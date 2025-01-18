@@ -38,10 +38,15 @@ const LoginPage = () => {
       );
 
       const result = response.data;
+      const expirationTime = Date.now() + 15 * 60 * 1000;
 
       if (response.status === 200) {
         localStorage.setItem("auth_token", result.token);
         localStorage.setItem("user._id", result.user._id);
+        localStorage.setItem(
+          "auth_token_expiration",
+          expirationTime.toString()
+        );
         router.push("/jobs");
       } else {
         setError("Invalid email or password");

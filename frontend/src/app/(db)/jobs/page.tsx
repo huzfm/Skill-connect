@@ -8,7 +8,6 @@ import {
   Loader2,
   Users,
   MapPin,
-  DollarSign,
   CreditCard,
   Phone,
   IndianRupee,
@@ -44,17 +43,25 @@ export default function JobsPage() {
 
   const router = useRouter();
 
-  //  const logout = () => {
-  //     Cookie.remove("jwt");
-  //     localStorage.clear();
-  //     router.push("/");
-  //   };
-
   const fetchJobs = async () => {
     try {
       const authToken = localStorage.getItem("auth_token");
+      const tokenExpiration = localStorage.getItem("auth_token_expiration");
+      const userId = localStorage.getItem("user._id");
+
       if (!authToken) {
         throw new Error("No auth token found");
+      }
+      if (!tokenExpiration) {
+        throw new Error("Token expiration not found");
+      }
+      const currentTime = Date.now();
+      if (currentTime > parseInt(tokenExpiration)) {
+        // Token expired
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("auth_token_expiration");
+        localStorage.removeItem("user._id");
+        throw new Error("Token expired, please log in again");
       }
 
       // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`, {
