@@ -36,7 +36,7 @@ app.use(cors(corsOptions));
 
 // app.use(
 //       cors({
-//             origin: 'https://skill-connect-erm5.vercel.app/',// Specify your frontend's URL here
+//             origin: 'http://localhost:3000',// Specify your frontend's URL here
 
 //             credentials: true, // Allow sending cookies 
 //       })

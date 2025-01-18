@@ -23,6 +23,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/ui/animated-bg";
+import Navbar from "@/components/ui/Job-nav";
+import NavJob from "@/components/ui/Job-nav";
 
 interface Job {
   _id: string;
@@ -42,11 +44,11 @@ export default function JobsPage() {
 
   const router = useRouter();
 
-  const logout = () => {
-    Cookie.remove("jwt");
-    localStorage.clear();
-    router.push("/");
-  };
+  //  const logout = () => {
+  //     Cookie.remove("jwt");
+  //     localStorage.clear();
+  //     router.push("/");
+  //   };
 
   const fetchJobs = async () => {
     try {
@@ -89,33 +91,7 @@ export default function JobsPage() {
   return (
     <div className="min-h-screen bg-slate-900 text-white ">
       <header className="border-b border-gray-800 sticky top-0 z-10 text-white backdrop-blur-md">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <Tool className="h-6 w-6" />
-            <span className="font-bold text-lg tracking-wide">
-              SkillConnect
-            </span>
-          </Link>
-          <nav className="flex items-center space-x-4">
-            <Button variant="ghost" asChild>
-              <Link href="/user-details" className="bg-white text-black">
-                My Jobs
-              </Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/post" className="bg-white text-black">
-                Post an Ad
-              </Link>
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={logout}
-              className="bg-blue-500 hover:bg-blue-600 transition"
-            >
-              Logout
-            </Button>
-          </nav>
-        </div>
+        <NavJob />
       </header>
 
       {/* Main */}
@@ -139,18 +115,18 @@ export default function JobsPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-[100px]">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:mx-[100px]">
             {jobs.map((job) => (
               <Card
                 key={job._id}
-                className="bg-gray-800/50 border border-gray-700 shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 rounded-xl overflow-hidden w-[300px]"
+                className="bg-gray-800/50 border border-gray-700 shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 rounded-xl overflow-hidden w-[350px] sm:w-[300px] "
               >
                 {/* Header Banner */}
                 <div className="bg-slate-200 p-4 text-black  text-center font-bold text-2xl font-title">
                   {job.Job}
                 </div>
 
-                <CardContent className="p-10 space-y-4">
+                <CardContent className="p-10 space-y-4 ">
                   {/* Job Details */}
                   <div className="flex flex-col space-y-2">
                     <div className="flex items-center space-x-2">
