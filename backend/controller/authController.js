@@ -31,13 +31,13 @@ exports.login = async (req, res) => {
             // Find user by email
             const user = await User.findOne({ email: req.body.email });
             if (!user) {
-                  return res.status(404).json({ message: 'Invalid email' });
+                  return res.status(404).json({ message: 'Incorrect email' });
             }
 
             // Compare passwords
             const isMatch = await bcrypt.compare(req.body.password, user.password);
             if (!isMatch) {
-                  return res.status(401).json({ message: 'Invalid password' });
+                  return res.status(401).json({ message: 'Incorrect password' });
             }
 
             // Generate token

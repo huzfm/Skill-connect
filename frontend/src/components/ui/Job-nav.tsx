@@ -19,12 +19,12 @@ export default function NavJob() {
     <nav className="bg-slate-900 dark:bg-gray-900 w-full z-20 top-0 start-0  dark:border-gray-600">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center">
+        <div className="flex items-center">
           <Tool className="h-6 w-6 mr-2 text-white" />
           <span className="text-md whitespace-nowrap text-white font-bold">
             SkillConnect
           </span>
-        </Link>
+        </div>
 
         {/* Hamburger Button */}
         <div className="flex md:hidden">

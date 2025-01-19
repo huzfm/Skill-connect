@@ -76,9 +76,14 @@ const AddJob = () => {
         setPhone("");
         setRate("");
         setMode("");
-        router.push("/jobs");
+        router.push("/user-details");
       } else {
-        setMessage(result.message || "Something went wrong.");
+        const errorMessage = result.message || "Something went wrong.";
+        const specificMessage = errorMessage.includes(":")
+          ? errorMessage.split(":").pop()?.trim()
+          : errorMessage;
+
+        setMessage(specificMessage || "An error occurred.");
       }
     } catch (error) {
       setMessage("Server error, try again later.");

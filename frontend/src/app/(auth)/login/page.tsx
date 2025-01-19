@@ -49,7 +49,7 @@ const LoginPage = () => {
         );
         router.push("/jobs");
       } else {
-        setError("Invalid email or password");
+        setError("Wrong Credentials");
       }
     } catch (err: any) {
       console.error("Login error:");
