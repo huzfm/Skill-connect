@@ -19,36 +19,13 @@ app.use(express.json()); // middleware which handles json data
 app.use(morgan('dev')) // middlwware which logs HTTP request
 
 
-// const allowedOrigins = ["https://skillconnectnext.vercel.app"];
 
-// const corsOptions = {
-//       origin: function (origin, callback) {
-//             if (allowedOrigins.includes(origin) || !origin) {
-//                   callback(null, true);
-//             } else {
-//                   callback(new Error("Not allowed by CORS"));
-//             }
-//       },
-//       credentials: true, // Allow cookies/authorization headers
-// };
-
-// Apply the CORS middleware globally
-// app.use(cors(corsOptions));
-// app.use(cors({
-//       origin: ['http://localhost:3000', 'https://skill-connect-ten.vercel.app/'], // Specify your frontend's URLs here    
-//       credentials: true // Allow sending cookies
-// }));
 app.use(cors({
-      origin: true, // Reflect the request origin (for cookies to work)
-      credentials: true,
+      origin: ['http://localhost:3000', 'https://skillconnectnext.vercel.app'], // Specify your frontend's URLs here    
+      credentials: true // Allow sending cookies
 }));
-// app.use(
-//       cors({
-//             origin: 'http://localhost:3000',// Specify your frontend's URL here
 
-//             credentials: true, // Allow sending cookies 
-//       })
-// )
+
 app.use(cookieParser())
 
 app.use('/api/users', userRoutes);
