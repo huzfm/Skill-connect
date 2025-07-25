@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
             const user = await User.create(req.body);
             res.status(200).json(user)
       } catch (err) {
-            res.status(401).json({ message: 'Error in signup', error: err.message });
+            res.status(400).json({ message: 'Error in signup', error: err.message });
       }
 };
 

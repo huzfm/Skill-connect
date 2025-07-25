@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, Edit2, Trash2, X } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import api from "@/utils/api";
 
 interface Job {
   _id: string;
@@ -57,20 +58,15 @@ const UserProfile: React.FC = () => {
         return;
       }
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
+      const response = await api.get(`users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      console.log(response);
 
-      if (response.ok) {
-        const data: User = await response.json();
-        setUser(data);
+      if (response.data) {
+        setUser(response.data);
         setLoading(false);
       } else {
         setError("Failed to fetch user data");
@@ -82,7 +78,6 @@ const UserProfile: React.FC = () => {
       console.error(error);
     }
   };
-
   const updateJob = async (jobId: string, updates: Partial<Job>) => {
     try {
       const authToken = localStorage.getItem("auth_token");
@@ -92,20 +87,15 @@ const UserProfile: React.FC = () => {
         return;
       }
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/jobs/${jobId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-          body: JSON.stringify(updates),
-        }
-      );
+      const response = await api.patch(`/jobs/${jobId}`, updates, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
 
-      if (response.ok) {
-        const updatedJob: Job = await response.json();
+      if (response.data) {
+        const updatedJob = response.data; // Assumes API returns the updated job
 
         if (user) {
           const updatedJobs = user.jobs.map((job) =>
@@ -133,18 +123,14 @@ const UserProfile: React.FC = () => {
         return;
       }
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/jobs/${jobId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
+      const response = await api.delete(`/jobs/${jobId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
 
-      if (response.ok) {
+      if (response.data) {
         if (user) {
           const updatedJobs = user.jobs.filter((job) => job._id !== jobId);
           setUser({ ...user, jobs: updatedJobs });
