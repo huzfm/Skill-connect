@@ -48,16 +48,20 @@ export default function JobsPage() {
         throw new Error("Your session has expired, please log in again");
       }
 
-      // Check localStorage for cached jobs
+      // Check localStorage for cached jobs and a cache-busting "jobs_updated" flag
       const cached = localStorage.getItem("cached_jobs");
       const cachedTime = localStorage.getItem("cached_jobs_time");
+      const jobsUpdated = localStorage.getItem("jobs_updated");
 
-      if (
+      // If there's a server-side update timestamp newer than our cache time, ignore cache
+      const cacheIsValid =
         cached &&
         cachedTime &&
-        Date.now() - parseInt(cachedTime) < 5 * 60 * 1000
-      ) {
-        // Less than 5 mins old → use cache
+        Date.now() - parseInt(cachedTime) < 5 * 60 * 1000 &&
+        (!jobsUpdated || parseInt(jobsUpdated) <= parseInt(cachedTime));
+
+      if (cacheIsValid) {
+        // Use cache when fresh and not invalidated
         setJobs(JSON.parse(cached));
         setLoading(false);
         return;
@@ -77,6 +81,9 @@ export default function JobsPage() {
       localStorage.setItem("cached_jobs", JSON.stringify(res.data));
       localStorage.setItem("cached_jobs_time", Date.now().toString());
 
+      // Clear any cache-busting flag after updating cache
+      localStorage.removeItem("jobs_updated");
+
       setJobs(res.data);
       setError("");
     } catch (err: any) {
@@ -90,6 +97,19 @@ export default function JobsPage() {
 
   useEffect(() => {
     fetchJobs();
+  }, []);
+
+  // Listen for cache-busting signals from other tabs/windows (or from the job creation flow)
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "jobs_updated") {
+        // Another tab or flow has created/updated jobs — refetch immediately
+        fetchJobs();
+      }
+    };
+
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
   }, []);
 
   const toggleJobDetails = (jobId: string) => {
